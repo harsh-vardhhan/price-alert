@@ -1,7 +1,20 @@
 use dotenv::dotenv;
 use std::env;
+use std::io::{self, BufRead};
 
 fn main() {
+    let mut line = String::new();
+    let stdin = io::stdin();
+    println!("{}", "1. authorize");
+    stdin.lock().read_line(&mut line).unwrap();
+    let option = line.trim();
+    let one = "1";
+    if option == one {
+        authorize()
+    }
+}
+
+fn authorize() {
     dotenv().ok();
     let authorize_url = "https://api.upstox.com/v2/login/authorization/dialog/";
     let client_id_string = "?client_id=";
