@@ -3,14 +3,21 @@ use std::env;
 use std::io::{self, BufRead};
 
 fn main() {
-    let mut line = String::new();
-    let stdin = io::stdin();
-    println!("{}", "1. authorize");
-    stdin.lock().read_line(&mut line).unwrap();
-    let option = line.trim();
-    let one = "1";
-    if option == one {
-        authorize()
+    let mut terminal = true;
+    while terminal {
+        let mut line = String::new();
+        let stdin = io::stdin();
+        println!("{}", "1. authorize");
+        println!("{}", "2. exit");
+        stdin.lock().read_line(&mut line).unwrap();
+        let option = line.trim();
+        let one = "1";
+        let two = "2";
+        if option == one {
+            authorize()
+        } else if option == two {
+            terminal = false;
+        }
     }
 }
 
