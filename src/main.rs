@@ -1,5 +1,6 @@
 use dotenv::dotenv;
 use std::env;
+use std::error::Error;
 use std::io::{self, BufRead};
 
 fn main() {
@@ -8,17 +9,31 @@ fn main() {
         let mut line = String::new();
         let stdin = io::stdin();
         println!("{}", "1. authorize");
-        println!("{}", "2. exit");
+        println!("{}", "2. login");
+        println!("{}", "3. exit");
         stdin.lock().read_line(&mut line).unwrap();
         let option = line.trim();
         let one = "1";
         let two = "2";
+        let three = "3";
         if option == one {
-            authorize()
+            authorize();
         } else if option == two {
+            login();
+        } else if option == three {
             terminal = false;
         }
     }
+}
+
+fn login() {
+    async fn call() -> Result<(), Box<dyn Error>> {
+        let resp = reqwest::get("https://httpbin.org/ip").await?.text().await?;
+        println!("{}", resp);
+        Ok(())
+    }
+    let rt = tokio::runtime::Runtime::new().unwrap();
+    rt.block_on(call());
 }
 
 fn authorize() {
