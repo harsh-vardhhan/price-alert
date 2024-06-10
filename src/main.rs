@@ -1,4 +1,5 @@
 use dotenv::dotenv;
+use serde_json::json;
 use std::env;
 use std::error::Error;
 use std::io::{self, BufRead};
@@ -28,8 +29,27 @@ fn main() {
 
 fn login() {
     async fn call() -> Result<(), Box<dyn Error>> {
-        let resp = reqwest::get("https://httpbin.org/ip").await?.text().await?;
-        println!("{}", resp);
+        dotenv().ok();
+        let code = env::var("CODE").unwrap().to_string();
+        let client_id = env::var("CLIENT_ID").unwrap().to_string();
+        let client_secret = env::var("API_SECRET").unwrap().to_string();
+        let redirect_url = env::var("REDIRECT_URL").unwrap().to_string();
+
+        let map1 = json!({
+            "code": code,
+            "client_id": client_id,
+            "client_secret": client_secret,
+            "redirect_uri":redirect_url,
+            "grant_type": "authorization_code",
+        });
+        let resp = reqwest::Client::new()
+            .post("https://api.upstox.com/v2/login/authorization/token")
+            .json(&map1)
+            .send()
+            .await?
+            .json()
+            .await?;
+        println!("{:?}", resp);
         Ok(())
     }
     let rt = tokio::runtime::Runtime::new().unwrap();
