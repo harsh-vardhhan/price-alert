@@ -35,7 +35,7 @@ fn login() {
         let client_secret = env::var("API_SECRET").unwrap().to_string();
         let redirect_url = env::var("REDIRECT_URL").unwrap().to_string();
 
-        let map1 = json!({
+        let data = json!({
             "code": code,
             "client_id": client_id,
             "client_secret": client_secret,
@@ -44,12 +44,13 @@ fn login() {
         });
         let resp = reqwest::Client::new()
             .post("https://api.upstox.com/v2/login/authorization/token")
-            .json(&map1)
+            .header("Content-Type", "application/x-www-form-urlencoded")
+            .header("accept", "application/json")
+            .query(&data)
             .send()
-            .await?
-            .json()
             .await?;
-        println!("{:?}", resp);
+        let body = resp.text().await?;
+        println!("Body:\n{}", body);
         Ok(())
     }
     let rt = tokio::runtime::Runtime::new().unwrap();
