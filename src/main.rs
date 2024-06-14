@@ -49,8 +49,10 @@ fn login() {
             .query(&data)
             .send()
             .await?;
-        let body = resp.text().await?;
-        println!("Body:\n{}", body);
+        let resp_text = resp.text().await?;
+        let user_info: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
+        let access_token = user_info["access_token"].clone();
+        println!("{}", access_token);
         Ok(())
     }
     let rt = tokio::runtime::Runtime::new().unwrap();
