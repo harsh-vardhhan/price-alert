@@ -3,6 +3,8 @@ use serde_json::json;
 use std::env;
 use std::error::Error;
 use std::io::{self, BufRead};
+use std::thread::sleep;
+use std::time::Duration;
 
 fn main() {
     let mut terminal = true;
@@ -101,10 +103,14 @@ fn track() {
             .send()
             .await?;
         let resp_text = resp.text().await?;
-        let ltp_quote: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
-        println!("{}", ltp_quote);
+        let instrument: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
+        println!("{}", instrument["data"]["NSE_INDEX:Nifty 50"]["last_price"]);
         Ok(())
     }
-    let rt = tokio::runtime::Runtime::new().unwrap();
-    rt.block_on(call());
+    let terminal = true;
+    while terminal {
+        sleep(Duration::from_secs(1));
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(call());
+    }
 }
