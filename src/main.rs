@@ -104,12 +104,13 @@ fn track() {
             .await?;
         let resp_text = resp.text().await?;
         let instrument: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
-        println!("{}", instrument["data"]["NSE_INDEX:Nifty 50"]["last_price"]);
+        let last_price = instrument["data"]["NSE_INDEX:Nifty 50"]["last_price"].clone();
+        println!("{}", last_price);
         Ok(())
     }
     let terminal = true;
     while terminal {
-        sleep(Duration::from_secs(1));
+        sleep(Duration::from_millis(500));
         let rt = tokio::runtime::Runtime::new().unwrap();
         rt.block_on(call());
     }
