@@ -11,17 +11,23 @@ fn main() {
         let stdin = io::stdin();
         println!("{}", "1. authorize");
         println!("{}", "2. login");
-        println!("{}", "3. exit");
+        println!("{}", "3. track");
+        println!("{}", "4. exit");
         stdin.lock().read_line(&mut line).unwrap();
         let option = line.trim();
+
         let one = "1";
         let two = "2";
         let three = "3";
+        let four = "4";
+
         if option == one {
             authorize();
         } else if option == two {
             login();
         } else if option == three {
+            track();
+        } else if option == four {
             terminal = false;
         }
     }
@@ -76,4 +82,29 @@ fn authorize() {
     .join("");
     println!("{}", url);
     let _ = open::that(url);
+}
+
+fn track() {
+    async fn call() -> Result<(), Box<dyn Error>> {
+        dotenv().ok();
+        let data = json!({
+            "instrument_key": "NSE_INDEX|Nifty 50"
+        });
+        let access_token = env::var("ACCESS_TOKEN").unwrap().to_string();
+        let bearer = "Bearer";
+        let authorization = [bearer, &access_token].join(" ");
+        let resp = reqwest::Client::new()
+            .get("https://api.upstox.com/v2/market-quote/ltp")
+            .header("Authorization", authorization)
+            .header("accept", "application/json")
+            .query(&data)
+            .send()
+            .await?;
+        let resp_text = resp.text().await?;
+        let ltp_quote: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
+        println!("{}", ltp_quote);
+        Ok(())
+    }
+    let rt = tokio::runtime::Runtime::new().unwrap();
+    rt.block_on(call());
 }
