@@ -104,8 +104,26 @@ fn track() {
             .await?;
         let resp_text = resp.text().await?;
         let instrument: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
-        let last_price = instrument["data"]["NSE_INDEX:Nifty 50"]["last_price"].clone();
-        println!("{}", last_price);
+
+        // Extract the "last_price" field from the JSON response
+        if let Some(data) = instrument.get("data") {
+            if let Some(nifty_data) = data.get("NSE_INDEX:Nifty 50") {
+                if let Some(last_price) = nifty_data.get("last_price") {
+                    if let Some(last_price_f64) = last_price.as_f64() {
+                        println!("Last Price: {}", last_price_f64);
+                    } else {
+                        println!("Error: last_price is not a valid f64");
+                    }
+                } else {
+                    println!("Error: last_price field not found");
+                }
+            } else {
+                println!("Error: NSE_INDEX:Nifty 50 field not found");
+            }
+        } else {
+            println!("Error: data field not found");
+        }
+
         Ok(())
     }
     let terminal = true;
