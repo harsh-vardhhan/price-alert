@@ -59,8 +59,11 @@ fn login() {
             .await?;
         let resp_text = resp.text().await?;
         let user_info: serde_json::Value = serde_json::from_str(&resp_text).unwrap();
-        let access_token = user_info["access_token"].clone();
-        println!("{}", access_token);
+        if let Some(access_token) = user_info.get("access_token") {
+            println!("Access Token: {}", access_token);
+        } else {
+            println!("Error: access_token field not found");
+        }
         Ok(())
     }
     let rt = tokio::runtime::Runtime::new().unwrap();
