@@ -12,3 +12,17 @@
 
 
 ![market-price](https://github.com/harsh-vardhhan/price-alert/assets/3825401/5ad92de6-3d4f-4ab6-928e-aa7147065a4e)
+
+## Getting started
+### create a .env file in project<br/>
+```
+CODE=ENTER_CODE_HERE
+CLIENT_ID=ENTER_CLIENT_ID_HERE  
+API_SECRET=ENTER_API_SECRET_HERE  
+REDIRECT_URL=ENTER_REDIRECT_URL_HERE  
+ACCESS_TOKEN=ENTER_ACCESS_TOKEN_HERE  
+```
+### Run the app
+```
+cargo run
+```
