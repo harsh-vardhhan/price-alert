@@ -22,6 +22,8 @@ API_SECRET=ENTER_API_SECRET_HERE
 REDIRECT_URL=ENTER_REDIRECT_URL_HERE  
 ACCESS_TOKEN=ENTER_ACCESS_TOKEN_HERE  
 ```
+<img width="512" alt="upstox_app" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/dd563274-23c4-41aa-8a61-eed67a49f1ee">
+
 ### Run the app
 ```
 cargo run
