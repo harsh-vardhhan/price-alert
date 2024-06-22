@@ -1,5 +1,7 @@
 # Price alert system (WIP 🚧)
 
+https://github.com/OWNER/REPOSITORY/actions/workflows/WORKFLOW-FILE/badge.svg
+
 **Tracking instrument**:
 <br/>
 - NIFTY  
