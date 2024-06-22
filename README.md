@@ -14,9 +14,6 @@
 
 ## Getting started
 ### create a .env file in project<br/>
-you get **CODE** and **ACCESS_TOKEN** after starting the app
-
-<br/><img width="280" alt="app" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/bccfcacf-8ce3-49ff-acde-463c5993d0e2">
 
 ```
 CODE=ENTER_CODE_HERE // Restart terminal after entering code
@@ -25,6 +22,13 @@ API_SECRET=ENTER_API_SECRET_HERE
 REDIRECT_URL=ENTER_REDIRECT_URL_HERE  
 ACCESS_TOKEN=ENTER_ACCESS_TOKEN_HERE // Restart terminal after entering access token
 ```
+
+get **CODE** and **ACCESS_TOKEN** after you run the app
+
+<br/><img width="280" alt="app" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/bccfcacf-8ce3-49ff-acde-463c5993d0e2">
+
+get **API_SECRET**, **REDIRECT_URL** and **CLIENT_ID** from [App section](https://account.upstox.com/developer/apps) Upstox Pro
+
 <img width="512" alt="upstox_app" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/dd563274-23c4-41aa-8a61-eed67a49f1ee">
 
 ### Run the app
