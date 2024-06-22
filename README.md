@@ -10,11 +10,14 @@
 **Why is it written in Rust?**
 <br/>The system aims to run all the market hours on the user's desktop. Hence, it aims to run at the lowest memory usage.
 
-
 ![market-price](https://github.com/harsh-vardhhan/price-alert/assets/3825401/5ad92de6-3d4f-4ab6-928e-aa7147065a4e)
 
 ## Getting started
 ### create a .env file in project<br/>
+you get **CODE** and **ACCESS_TOKEN** after starting the app
+
+<br/><img width="280" alt="app" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/bccfcacf-8ce3-49ff-acde-463c5993d0e2">
+
 ```
 CODE=ENTER_CODE_HERE // Restart terminal after entering code
 CLIENT_ID=ENTER_CLIENT_ID_HERE  
