@@ -90,7 +90,34 @@ fn authorize() {
 }
 
 fn track() {
-    async fn call() -> Result<(), Box<dyn Error>> {
+    let mut target_terminal = true;
+    let mut target: f64 = 0.0;
+
+    while target_terminal {
+        let mut line = String::new();
+        io::stdin()
+            .read_line(&mut line)
+            .expect("Not a valid string");
+        target = match line.trim().parse() {
+            Ok(num) => num,
+            Err(_) => 0.0,
+        };
+        if target == 0.0 {
+            println!("{} is not a number", target)
+        } else if target != 0.0 {
+            println!("target set as {}", target);
+            target_terminal = false;
+        }
+    }
+
+    let scan_terminal = true;
+    while scan_terminal {
+        sleep(Duration::from_millis(500));
+        let rt = tokio::runtime::Runtime::new().unwrap();
+        rt.block_on(scan_target(target));
+    }
+
+    async fn scan_target(target: f64) -> Result<(), Box<dyn Error>> {
         dotenv().ok();
         let data = json!({
             "instrument_key": "NSE_INDEX|Nifty 50"
@@ -114,6 +141,11 @@ fn track() {
                 if let Some(last_price) = nifty_data.get("last_price") {
                     if let Some(last_price_f64) = last_price.as_f64() {
                         println!("Last Price: {}", last_price_f64);
+                        if last_price_f64 > target {
+                            println!("{}", "value is more");
+                        } else {
+                            println!("{}", "value is less");
+                        }
                     } else {
                         println!("Error: last_price is not a valid f64");
                     }
@@ -126,13 +158,6 @@ fn track() {
         } else {
             println!("Error: data field not found");
         }
-
         Ok(())
-    }
-    let terminal = true;
-    while terminal {
-        sleep(Duration::from_millis(500));
-        let rt = tokio::runtime::Runtime::new().unwrap();
-        rt.block_on(call());
     }
 }
