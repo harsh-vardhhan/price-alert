@@ -90,10 +90,58 @@ fn authorize() {
 }
 
 fn track() {
-    let mut target_terminal = true;
-    let mut target: f64 = 0.0;
+    #[derive(Copy, Clone, Debug, Eq, PartialEq)]
+    struct Instrument {
+        pub name: &'static str,
+        pub ticker: &'static str,
+        pub key: u32,
+    }
 
+    const INSTRUMENTS: &'static [Instrument] = &[
+        Instrument {
+            ticker: "NSE_INDEX:Nifty 50",
+            name: "NSE_INDEX|Nifty 50",
+            key: 1,
+        },
+        Instrument {
+            ticker: "NSE_INDEX:Nifty Bank",
+            name: "NSE_INDEX|Nifty Bank",
+            key: 2,
+        },
+    ];
+
+    let mut selected_instrument_no: u32 = 0;
+
+    let mut selected_instrument_name = "";
+    let mut selected_instrument_ticker = "";
+
+    let mut instrument_terminal = true;
+    while instrument_terminal {
+        println!("{}", "Select instrument to track");
+        for instrument in INSTRUMENTS.iter() {
+            println!("{}.{}", instrument.key, instrument.name);
+        }
+        let mut line = String::new();
+        io::stdin()
+            .read_line(&mut line)
+            .expect("Not a valid number");
+        selected_instrument_no = match line.trim().parse() {
+            Ok(num) => num,
+            Err(_) => 0,
+        };
+        for instrument in INSTRUMENTS.iter() {
+            if selected_instrument_no == instrument.key {
+                selected_instrument_name = instrument.name;
+                selected_instrument_ticker = instrument.ticker;
+                instrument_terminal = false;
+            }
+        }
+    }
+
+    let mut target: f64 = 0.0;
+    let mut target_terminal = true;
     while target_terminal {
+        println!("{}", "Enter target to trigger");
         let mut line = String::new();
         io::stdin()
             .read_line(&mut line)
@@ -114,13 +162,21 @@ fn track() {
     while scan_terminal {
         sleep(Duration::from_millis(500));
         let rt = tokio::runtime::Runtime::new().unwrap();
-        rt.block_on(scan_target(target));
+        rt.block_on(scan_target(
+            target,
+            &selected_instrument_name,
+            &selected_instrument_ticker,
+        ));
     }
 
-    async fn scan_target(target: f64) -> Result<(), Box<dyn Error>> {
+    async fn scan_target(
+        target: f64,
+        selected_instrument_name: &str,
+        selected_instrument_ticker: &str,
+    ) -> Result<(), Box<dyn Error>> {
         dotenv().ok();
         let data = json!({
-            "instrument_key": "NSE_INDEX|Nifty 50"
+            "instrument_key": selected_instrument_name
         });
         let access_token = env::var("ACCESS_TOKEN").unwrap().to_string();
         let bearer = "Bearer";
@@ -137,7 +193,7 @@ fn track() {
 
         // Extract the "last_price" field from the JSON response
         if let Some(data) = instrument.get("data") {
-            if let Some(nifty_data) = data.get("NSE_INDEX:Nifty 50") {
+            if let Some(nifty_data) = data.get(selected_instrument_ticker) {
                 if let Some(last_price) = nifty_data.get("last_price") {
                     if let Some(last_price_f64) = last_price.as_f64() {
                         println!("Last Price: {}", last_price_f64);
