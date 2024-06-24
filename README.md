@@ -1,4 +1,4 @@
-# Price alert system (WIP 🚧)
+# Price alert system
 <img width="826" alt="price-alert-logic" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/4abff4ab-91c6-4c69-af96-a257fd05116d">
 
 
