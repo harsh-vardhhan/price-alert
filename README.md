@@ -1,5 +1,6 @@
 # Price alert system (WIP 🚧)
-<img width="791" alt="Screenshot 2024-06-24 at 7 08 17 AM" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/feed1931-3671-4fe8-ab59-efe1a32fb42e">
+<img width="826" alt="price-alert-logic" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/4abff4ab-91c6-4c69-af96-a257fd05116d">
+
 
 **Tracking instrument**:
 <br/>
