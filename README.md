@@ -1,18 +1,9 @@
 # Price alert system
 <img width="826" alt="price-alert-logic" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/4abff4ab-91c6-4c69-af96-a257fd05116d">
 
+## Product demo
 
-**Tracking instrument**:
-<br/>
-- NIFTY  
-- BANKNIFTY
-
-**API:** [Upstox API](https://upstox.com/uplink/trader-api/)
-
-**Why is it written in Rust?**
-<br/>The system aims to run all the market hours on the user's desktop. Hence, it aims to run at the lowest memory usage.
-
-![market-price](https://github.com/harsh-vardhhan/price-alert/assets/3825401/5ad92de6-3d4f-4ab6-928e-aa7147065a4e)
+![demo](https://github.com/harsh-vardhhan/price-alert/assets/3825401/e5a6a290-885d-4a50-8758-7fe1846e4c31)
 
 ## Getting started
 ### create a .env file in project<br/>
