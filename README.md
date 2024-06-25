@@ -5,6 +5,9 @@
 
 ![demo](https://github.com/harsh-vardhhan/price-alert/assets/3825401/e5a6a290-885d-4a50-8758-7fe1846e4c31)
 
+## Trading API
+[Upstox API](https://upstox.com/uplink/)
+
 ## Getting started
 ### create a .env file in project<br/>
 
