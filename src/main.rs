@@ -1,3 +1,4 @@
+use colored::Colorize;
 use dotenv::dotenv;
 use serde_json::json;
 use std::env;
@@ -117,7 +118,7 @@ fn track() {
 
     let mut instrument_terminal = true;
     while instrument_terminal {
-        println!("{}", "Select instrument to track");
+        println!("{}", "Select instrument to track".red().bold());
         for instrument in INSTRUMENTS.iter() {
             println!("{}.{}", instrument.key, instrument.name);
         }
@@ -141,7 +142,7 @@ fn track() {
     let mut target: f64 = 0.0;
     let mut target_terminal = true;
     while target_terminal {
-        println!("{}", "Enter target to trigger");
+        println!("{}", "Enter target to trigger".red().bold());
         let mut line = String::new();
         io::stdin()
             .read_line(&mut line)
@@ -161,7 +162,7 @@ fn track() {
     let mut logic: u32 = 0;
     let mut logic_terminal = true;
     while logic_terminal {
-        println!("{}", "Select price alert condition");
+        println!("{}", "Select price alert condition".red().bold());
         println!("1. {} greater than {}", selected_instrument_name, target);
         println!("2. {} less than {}", selected_instrument_name, target);
         let mut line = String::new();
@@ -230,7 +231,7 @@ fn track() {
                                 _scan_terminal = false;
                             }
                         } else if logic == 2 {
-                            if last_price_f64 > target {
+                            if last_price_f64 < target {
                                 println!("{}", "alert triggered");
                                 _scan_terminal = false
                             }
