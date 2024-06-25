@@ -158,22 +158,49 @@ fn track() {
         }
     }
 
-    let scan_terminal = true;
+    let mut logic: u32 = 0;
+    let mut logic_terminal = true;
+    while logic_terminal {
+        println!("{}", "Select price alert condition");
+        println!("1. {} greater than {}", selected_instrument_name, target);
+        println!("2. {} less than {}", selected_instrument_name, target);
+        let mut line = String::new();
+        io::stdin()
+            .read_line(&mut line)
+            .expect("Not a valid number");
+        logic = match line.trim().parse() {
+            Ok(num) => num,
+            Err(_) => 0,
+        };
+        if logic == 1 || logic == 2 {
+            logic_terminal = false;
+        }
+    }
+
+    let mut scan_terminal = true;
     while scan_terminal {
         sleep(Duration::from_millis(500));
         let rt = tokio::runtime::Runtime::new().unwrap();
-        rt.block_on(scan_target(
+        let scanner = scan_target(
             target,
             &selected_instrument_name,
             &selected_instrument_ticker,
-        ));
+            logic,
+        );
+        let continue_scan = match rt.block_on(scanner) {
+            Ok(result) => result,
+            Err(_) => false,
+        };
+        scan_terminal = continue_scan;
     }
 
     async fn scan_target(
         target: f64,
         selected_instrument_name: &str,
         selected_instrument_ticker: &str,
-    ) -> Result<(), Box<dyn Error>> {
+        logic: u32,
+    ) -> Result<bool, Box<dyn Error>> {
+        let mut _scan_terminal: bool = true;
         dotenv().ok();
         let data = json!({
             "instrument_key": selected_instrument_name
@@ -197,10 +224,16 @@ fn track() {
                 if let Some(last_price) = nifty_data.get("last_price") {
                     if let Some(last_price_f64) = last_price.as_f64() {
                         println!("Last Price: {}", last_price_f64);
-                        if last_price_f64 > target {
-                            println!("{}", "value is more");
-                        } else {
-                            println!("{}", "value is less");
+                        if logic == 1 {
+                            if last_price_f64 > target {
+                                println!("{}", "alert triggered");
+                                _scan_terminal = false;
+                            }
+                        } else if logic == 2 {
+                            if last_price_f64 > target {
+                                println!("{}", "alert triggered");
+                                _scan_terminal = false
+                            }
                         }
                     } else {
                         println!("Error: last_price is not a valid f64");
@@ -214,6 +247,6 @@ fn track() {
         } else {
             println!("Error: data field not found");
         }
-        Ok(())
+        Ok(_scan_terminal)
     }
 }
