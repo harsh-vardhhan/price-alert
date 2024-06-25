@@ -27,8 +27,3 @@ get **CODE** and **ACCESS_TOKEN** after you run the app
 get **API_SECRET**, **REDIRECT_URL** and **CLIENT_ID** from [App section](https://account.upstox.com/developer/apps) Upstox Pro
 
 <img width="512" alt="upstox_app" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/dd563274-23c4-41aa-8a61-eed67a49f1ee">
-
-### Run the app
-```
-cargo run
-```
