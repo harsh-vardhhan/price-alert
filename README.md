@@ -1,14 +1,15 @@
 # Price alert system
+
+## How it works?
 <img width="720" alt="price-alert-logic" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/4abff4ab-91c6-4c69-af96-a257fd05116d">
 
-## Product demo
-
+## How to use?
 ![demo](https://github.com/harsh-vardhhan/price-alert/assets/3825401/e5a6a290-885d-4a50-8758-7fe1846e4c31)
 
-## Trading API
+## What API is used for market API?
 [Upstox API](https://upstox.com/uplink/)
 
-## Getting started
+## How to setup?
 ### create a .env file in project<br/>
 
 ```
