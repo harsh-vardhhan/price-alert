@@ -5,7 +5,7 @@
 
 ## How to use?
 
-![demo](https://github.com/harsh-vardhhan/price-alert/demo.svg)
+![demo](https://raw.githubusercontent.com/harsh-vardhhan/price-alert/master/demo.svg)
 
 ## What API is used for market API?
 [Upstox API](https://upstox.com/uplink/)
