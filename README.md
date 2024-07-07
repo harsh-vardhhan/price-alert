@@ -1,5 +1,7 @@
 # Price alert system
 
+[![CI](https://github.com/zed-industries/zed/actions/workflows/ci.yml/badge.svg)](https://github.com/harsh-vardhhan/price-alert/actions/workflows/rust.yml)
+
 ## How it works?
 <img width="720" alt="price-alert-logic" src="https://github.com/harsh-vardhhan/price-alert/assets/3825401/4abff4ab-91c6-4c69-af96-a257fd05116d">
 
